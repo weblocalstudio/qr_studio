@@ -1,0 +1,21 @@
+button, input, select {
+    transition: all 0.2s ease-in-out;
+}
+
+#reader video {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    border-radius: 0.75rem;
+}
+
+input[type="color"]:focus {
+    transform: scale(1.02);
+    border-color: #4f46e5;
+}
+
+@media (max-width: 767px) {
+    .hidden-mobile {
+        display: none !important;
+    }
+}

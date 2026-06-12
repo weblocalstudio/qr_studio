@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Studio | Weblocal Studio</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans">
+
+    <header class="bg-white shadow-sm border-b border-slate-200">
+        <div class="max-w-5xl mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-indigo-600">QR Studio <span class="text-slate-400 font-light">| Weblocal Studio</span></h1>
+            <span class="bg-green-100 text-green-700 text-xs font-semibold px-2.5 py-1 rounded-full">100% Gratis</span>
+        </div>
+    </header>
+
+    <div class="md:hidden flex border-b border-slate-200 bg-white sticky top-0 z-50">
+        <button id="mobile-tab-gen" class="flex-1 py-3 text-center text-sm font-semibold border-b-2 border-indigo-600 text-indigo-600">Generador</button>
+        <button id="mobile-tab-scan" class="flex-1 py-3 text-center text-sm font-semibold border-b-2 border-transparent text-slate-500">Escáner</button>
+    </div>
+
+    <main class="max-w-5xl mx-auto px-4 py-6 md:py-10 grid md:grid-cols-2 gap-8">
+        
+        <section id="panel-generator" class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between hidden md:flex">
+            <div>
+                <h2 class="text-2xl font-bold mb-2 text-slate-900">✨ Generador de QR</h2>
+                <p class="text-sm text-slate-500 mb-6">Crea y personaliza tu código QR en tiempo real.</p>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-slate-500 mb-2">Contenido (URL o Texto)</label>
+                        <input type="text" id="qr-text" placeholder="https://weblocalstudio.com" class="w-full px-4 py-3 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-slate-500 mb-2">Color QR</label>
+                            <input type="color" id="qr-color" value="#4f46e5" class="w-full h-11 p-1 bg-white border border-slate-300 rounded-xl cursor-pointer">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-slate-500 mb-2">Color Fondo</label>
+                            <input type="color" id="qr-bg" value="#ffffff" class="w-full h-11 p-1 bg-white border border-slate-300 rounded-xl cursor-pointer">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-slate-500 mb-2">Diseño Puntos</label>
+                            <select id="qr-dots-type" class="w-full px-3 py-2.5 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white">
+                                <option value="rounded">Redondeado</option>
+                                <option value="dots">Puntos</option>
+                                <option value="classy">Elegante</option>
+                                <option value="classy-rounded">Elegante Redondo</option>
+                                <option value="square" selected>Cuadrado</option>
+                                <option value="extra-rounded">Extra Redondeado</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-slate-500 mb-2">Diseño Esquinas</label>
+                            <select id="qr-corners-type" class="w-full px-3 py-2.5 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white">
+                                <option value="square" selected>Cuadrado</option>
+                                <option value="dot">Punto</option>
+                                <option value="extra-rounded">Redondeado</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-slate-100 flex flex-col items-center">
+                <div id="canvas-container" class="bg-white p-4 rounded-xl shadow-inner border border-slate-100 min-h-[230px] flex items-center justify-center"></div>
+                <button id="btn-download" class="mt-4 w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-4 rounded-xl shadow-md shadow-indigo-100 cursor-pointer">
+                    Descargar en PNG
+                </button>
+            </div>
+        </section>
+
+        <section id="panel-scanner" class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
+            <div>
+                <h2 class="text-2xl font-bold mb-2 text-slate-900">🔍 Lector de QR</h2>
+                <p class="text-sm text-slate-500 mb-6">Escanea usando tu cámara o subiendo un archivo.</p>
+                
+                <div class="flex gap-2 p-1 bg-slate-100 rounded-xl mb-4">
+                    <button id="tab-cam" class="flex-1 text-sm font-medium py-2 rounded-lg bg-white shadow-sm text-slate-800 cursor-pointer">📷 Cámara</button>
+                    <button id="tab-file" class="flex-1 text-sm font-medium py-2 rounded-lg text-slate-600 hover:text-slate-800 cursor-pointer">📁 Archivo</button>
+                </div>
+
+                <div id="camera-reader-wrapper" class="overflow-hidden rounded-xl bg-slate-900 aspect-video flex flex-col items-center justify-center relative p-4 text-center">
+                    <div id="camera-placeholder" class="flex flex-col items-center">
+                        <span class="text-3xl mb-2">📷</span>
+                        <button id="btn-start-cam" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold px-4 py-2 rounded-lg shadow cursor-pointer">Activar Cámara</button>
+                    </div>
+                    <div id="reader" class="w-full hidden"></div>
+                </div>
+
+                <div id="file-reader-wrapper" class="hidden border-2 border-dashed border-slate-300 rounded-xl p-8 text-center bg-slate-50 hover:bg-slate-100">
+                    <input type="file" id="qr-file-input" accept="image/*" class="hidden">
+                    <label for="qr-file-input" class="cursor-pointer block">
+                        <span class="text-4xl block mb-2">📂</span>
+                        <span class="text-indigo-600 font-medium">Haz clic para subir</span> o arrastra una imagen
+                    </label>
+                </div>
+            </div>
+
+            <div class="mt-6 pt-6 border-t border-slate-100">
+                <label class="block text-xs font-bold uppercase text-slate-500 mb-2">Resultado:</label>
+                <div id="scan-result" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm break-all text-slate-500 italic">
+                    Esperando código para escanear...
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+</body>
+</html>
