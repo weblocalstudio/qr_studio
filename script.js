@@ -10,7 +10,7 @@ const qrCode = new QRCodeStyling({
     width: 200,
     height: 200,
     type: "svg",
-    data: "https://weblocalstudio.com",
+    data: "https://weblocalstudio.es",
     dotsOptions: { color: "#4f46e5", type: "square" },
     backgroundOptions: { color: "#ffffff" },
     cornersSquareOptions: { type: "square" },
@@ -21,7 +21,7 @@ qrCode.append(container);
 
 function updateQR() {
     qrCode.update({
-        data: qrText.value || "https://weblocalstudio.com",
+        data: qrText.value || "https://weblocalstudio.es",
         dotsOptions: { color: qrColor.value, type: qrDotsType.value },
         backgroundOptions: { color: qrBg.value },
         cornersSquareOptions: { type: qrCornersType.value },
