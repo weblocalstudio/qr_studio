@@ -10,7 +10,7 @@ const qrCode = new QRCodeStyling({
     width: 200,
     height: 200,
     type: "svg",
-    data: "https://weblocalstudio.es",
+    data: "https://www.webrealiza.com",
     dotsOptions: { color: "#4f46e5", type: "square" },
     backgroundOptions: { color: "#ffffff" },
     cornersSquareOptions: { type: "square" },
@@ -21,7 +21,7 @@ qrCode.append(container);
 
 function updateQR() {
     qrCode.update({
-        data: qrText.value || "https://weblocalstudio.es",
+        data: qrText.value || "https://www.webrealiza.com",
         dotsOptions: { color: qrColor.value, type: qrDotsType.value },
         backgroundOptions: { color: qrBg.value },
         cornersSquareOptions: { type: qrCornersType.value },
@@ -36,7 +36,7 @@ qrDotsType.addEventListener('change', updateQR);
 qrCornersType.addEventListener('change', updateQR);
 
 btnDownload.addEventListener('click', () => {
-    qrCode.download({ name: "qr-weblocal-studio", extension: "png" });
+    qrCode.download({ name: "qr-web-realiza", extension: "png" });
 });
 
 const tabCam = document.getElementById('tab-cam');
